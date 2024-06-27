@@ -1,0 +1,100 @@
+/* Import the Material Symbols Outlined font */
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+
+/* Header styling */
+.header-container {
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+.header-left .logo {
+  height: 70px;
+  width: 60px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  padding: 5px 50px;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #ddd;
+}
+
+.nav-item::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+}
+
+.menu-icon .material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Tablet and mobile styles */
+@media (max-width: 1024px) {
+  .menu-icon {
+    display: block;
+    margin-right: 20px;
+  }
+
+  .nav {
+    display: none;
+  }
+}
+
+/* Dropdown menu */
+.menu-options {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 20px;
+  background-color: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-options .nav-item {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.menu-options .nav-item:hover {
+  background-color: #555;
+}
