@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import AWS from "aws-sdk";
 import axios from "axios";
 import Loading from "./Loading"; // Make sure Loading.js is in the same directory and exported properly
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import styles for react-quill
 import "../Styles/Panel.css"; // Ensure your styles are correctly imported
 
 // Configure AWS SDK
@@ -34,6 +36,13 @@ const Silkcotton = () => {
     setProductData({
       ...productData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDescriptionChange = (value) => {
+    setProductData({
+      ...productData,
+      description: value,
     });
   };
 
@@ -199,11 +208,10 @@ const Silkcotton = () => {
             </div>
             <div>
               <label htmlFor="description">Description:</label>
-              <textarea
+              <ReactQuill
                 id="description"
-                name="description"
                 value={productData.description}
-                onChange={handleInputChange}
+                onChange={handleDescriptionChange}
                 required
               />
             </div>

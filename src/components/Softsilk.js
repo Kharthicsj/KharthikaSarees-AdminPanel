@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import AWS from "aws-sdk";
 import axios from "axios";
-import Loading from "./Loading"; // Make sure Loading.js is in the same directory and exported properly
-import "../Styles/Panel.css"; // Ensure your styles are correctly imported
+import Loading from "./Loading"; 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; 
+import "../Styles/Panel.css"; 
 
 // Configure AWS SDK
 AWS.config.update({
@@ -34,6 +36,13 @@ const Softsilk = () => {
     setProductData({
       ...productData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDescriptionChange = (value) => {
+    setProductData({
+      ...productData,
+      description: value,
     });
   };
 
@@ -199,11 +208,10 @@ const Softsilk = () => {
             </div>
             <div>
               <label htmlFor="description">Description:</label>
-              <textarea
+              <ReactQuill
                 id="description"
-                name="description"
                 value={productData.description}
-                onChange={handleInputChange}
+                onChange={handleDescriptionChange}
                 required
               />
             </div>
