@@ -38,6 +38,22 @@
     margin-bottom: 20px;
     width: calc(100% - 40px); /* Set width of input fields */
   }
+
+  .tab-navigation button{
+    width: 100px;
+    height: 50px;
+    background-color: transparent;
+    border: 0.5px solid black;
+    display: flexbox;
+    margin: 20px;
+  }
+
+  .tab-button.active {
+    background-color: #007bff; /* Highlight color */
+    color: white; /* Text color when active */
+    border-color: #007bff; /* Border color when active */
+  }
+  
   
   /* Style for submit button */
   button[type="submit"] {
