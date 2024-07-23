@@ -4,6 +4,7 @@
 /* Header styling */
 .header-container {
   position: relative;
+  z-index: 10; /* Ensure header is above other content */
 }
 
 .header {
@@ -13,6 +14,8 @@
   padding: 10px 20px;
   background-color: #333;
   color: #fff;
+  position: relative; /* Make sure the header positioning is relative */
+  z-index: 10; /* Ensure header is above other content */
 }
 
 .header-left .logo {
@@ -34,7 +37,7 @@
   color: #fff;
   text-decoration: none;
   position: relative;
-  padding: 5px 50px;
+  padding: 5px 20px; /* Adjusted padding */
   transition: color 0.3s ease;
 }
 
@@ -58,6 +61,7 @@
 .menu-icon {
   display: none;
   cursor: pointer;
+  z-index: 20; /* Ensure the menu icon is clickable */
 }
 
 .menu-icon .material-symbols-outlined {
@@ -74,6 +78,10 @@
   .nav {
     display: none;
   }
+
+  .menu-options {
+    display: block; /* Ensure dropdown menu is visible */
+  }
 }
 
 /* Dropdown menu */
@@ -85,6 +93,7 @@
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 20; /* Ensure dropdown is above other content */
 }
 
 .menu-options .nav-item {

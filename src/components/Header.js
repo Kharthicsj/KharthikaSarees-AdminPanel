@@ -14,7 +14,7 @@ const Header = () => {
     <div className="header-container">
       <header className="header">
         <div className="header-left">
-          <img src={loginLogo} alt="Logo" className="logo" />
+          <img src={loginLogo} alt="Logo" className="logo" draggable='false'/>
         </div>
         <div className={`header-right ${menuOpen ? 'open' : ''}`}>
           <nav className="nav">

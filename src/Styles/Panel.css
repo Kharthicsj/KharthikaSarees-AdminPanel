@@ -1,91 +1,112 @@
-/* Base styles for form container */
 .form-container {
-    background-color: #ffffff; /* White background color */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
-    max-width: 500px; /* Limit maximum width */
-    margin: 0 auto; /* Center the form container horizontally */
-    display: flex; /* Use flexbox to center items vertically */
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-  }
-  
-  /* Style for form elements */
-  form div {
-    margin-bottom: 15px; /* Add space between form elements */
-    width: 100%; /* Set width to 100% */
-    text-align: center; /* Center text within div */
-  }
-  
-  /* Style for labels */
-  label {
-    display: block; /* Display labels as block elements */
-    margin-bottom: 5px; /* Add space below labels */
-  }
-  
-  /* Style for input fields */
-  input[type="text"],
-  textarea {
-    width: calc(100% - 40px); /* Set width of input fields */
-    padding: 10px; /* Add padding to input fields */
-    border: 1px solid #ccc; /* Add border to input fields */
-    border-radius: 5px; /* Add border radius */
-  }
-  
-  /* Style for upload images input */
-  #files {
-    margin-bottom: 20px;
-    width: calc(100% - 40px); /* Set width of input fields */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: calc(100% - 40px);
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 0;
+  margin-top: 10%;
+}
+
+form div {
+  margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+  width: calc(100% - 40px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#files {
+  margin-bottom: 20px;
+  width: calc(100% - 40px);
+}
+
+.tab-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.tab-navigation button {
+  width: 80px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: calc(100% - 40px);
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 1024px) {
+  .form-container {
+    padding: 15px;
+    width: calc(100% - 30px);
+    margin: 40px auto;
+    margin-top: 30%;
   }
 
-  .tab-navigation button{
-    width: 100px;
-    height: 50px;
-    background-color: transparent;
-    border: 0.5px solid black;
-    display: flexbox;
-    margin: 20px;
+  .tab-navigation {
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .form-container {
+    padding: 10px;
+    width: calc(100% - 20px);
+    margin: 60px auto;
+    margin-top: 30%;
   }
 
-  .tab-button.active {
-    background-color: #007bff; /* Highlight color */
-    color: white; /* Text color when active */
-    border-color: #007bff; /* Border color when active */
+  .tab-navigation {
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
   }
-  
-  
-  /* Style for submit button */
-  button[type="submit"] {
-    background-color: #007bff; /* Blue button color */
-    color: #fff; /* White text color */
-    padding: 10px 20px; /* Add padding */
-    margin-left: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Add smooth transition */
-    width: calc(100% - 40px); /* Set width of button */
-  }
-  
-  /* Change button color on hover */
-  button[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
-  
-  /* Media queries for responsive design */
-  
-  /* Tablets */
-  @media (max-width: 1024px) {
-    .form-container {
-      padding: 15px; /* Adjust padding for tablets */
-    }
-  }
-  
-  /* Mobile devices */
-  @media (max-width: 768px) {
-    .form-container {
-      padding: 10px; /* Adjust padding for mobile devices */
-    }
-  }
-  
+}

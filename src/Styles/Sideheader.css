@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+/* Apply styles for icons */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 24px; /* Set icon size */
+  margin: 0; /* Remove margin */
+}
+
+/* Base styles for sidebar and menu items */
+.sidebar-container {
+  display: flex;
+  align-items: flex-start;
+  height: 100vh;
+  padding: 20px 0;
+  position: relative;
+  margin-top: -55px;
+}
+
+.sidebar {
+  width: 80px; /* Reduced width to fit icons */
+  background-color: #007bff; /* Blue background */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px; /* Adjust padding to fit icons */
+  border-radius: 15px; /* Rounded edges */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  margin: auto 0; /* Center horizontally within the wrapper */
+  transition: transform 0.3s ease;
+}
+
+.menu-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column; /* Stack icon and label vertically */
+  align-items: center;
+  justify-content: center; /* Center items horizontally */
+  padding: 10px; /* Reduced padding to fit in the sidebar */
+  margin: 10px 0; /* Added margin to space items vertically */
+  cursor: pointer;
+  border-radius: 15px; /* Rounded edges */
+}
+
+.menu-item:hover{
+  background-color: rgba(74, 77, 74, 0.064);
+}
+
+.menu-label {
+  font-size: 12px; /* Smaller font size for labels */
+  margin-top: 5px; /* Space between icon and label */
+  text-align: center; /* Center text */
+}
+
+/* Adjust top margin for mobile devices */
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    padding-top: 30px; /* Additional padding to move the menu items down */
+  }
+
+  .menu-item {
+    margin-top: 20px; /* Add top margin to move items down */
+  }
+}
+
+.arrow-icon {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open + .arrow-icon {
+  transform: rotate(180deg); /* Rotate the arrow when sidebar is open */
+}
+
+/* Responsive design */
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    width: 80px; /* Reduced width for mobile devices */
+    height: 100%;
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .arrow-icon {
+    display: block;
+    margin-top: 100px;
+    z-index: 10;
+  }
+
+  .menu-item-container{
+    margin-top: 130px;
+  }
+
+  .sidebar-container {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  
+  .tab-navigation button{
+    width: 90px;
+    height: 50px;
+  }
+
+  .sidebar {
+    width: 80px; /* Consistent width for smaller screens */
+    height: 100%;
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    z-index: 1;
+  }
+
+  .arrow-icon {
+    display: block;
+    z-index: 10;
+  }
+
+  .menu-item-container{
+    margin-top: 130px;
+  }
+
+  .sidebar-container {
+    padding: 0;
+  }
+}
