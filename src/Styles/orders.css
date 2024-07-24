@@ -1,5 +1,5 @@
-/* src/styles/UsersTable.css */
-.users-page {
+/* src/styles/OrdersTable.css */
+.orders-page {
     display: flex;
     justify-content: center; /* Center-align the content */
     width: 100%;
@@ -7,32 +7,32 @@
     box-sizing: border-box;
   }
   
-  .users-container {
+  .orders-container {
     width: 100%;
     max-width: 1200px; /* Limit the maximum width */
   }
-
-  .user-header{
+  
+  .order-header {
     text-align: center;
   }
-
+  
   .table-container {
     overflow-x: auto; /* Allow horizontal scroll for overflow */
   }
   
-  .user-table {
+  .order-table {
     width: 100%;
     border-collapse: collapse; /* Collapse table borders */
     border: 3px solid black; /* Add thick black border around the table */
   }
   
-  .user-table th, .user-table td {
+  .order-table th, .order-table td {
     border: 2px solid black; /* Add thick black border to table cells */
     padding: 8px;
     text-align: left;
   }
   
-  .user-table th {
+  .order-table th {
     background-color: #f4f4f4;
   }
   
@@ -47,10 +47,9 @@
     border-radius: 4px;
   }
   
-
   /* Responsive table adjustments */
   @media (max-width: 768px) {
-    .user-table th, .user-table td {
+    .order-table th, .order-table td {
       font-size: 12px; /* Adjust font size for smaller screens */
       padding: 6px; /* Reduce padding for smaller screens */
     }

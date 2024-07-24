@@ -58,6 +58,34 @@
   width: 100%;
 }
 
+.nav-item-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  position: relative;
+  padding: 5px 20px; /* Adjusted padding */
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-item-button:hover {
+  color: #ddd;
+}
+
+.nav-item-button::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-item-button:hover::after {
+  width: 100%;
+}
+
 .menu-icon {
   display: none;
   cursor: pointer;

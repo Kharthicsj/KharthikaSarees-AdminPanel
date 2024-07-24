@@ -13,8 +13,7 @@
   align-items: flex-start;
   height: 100vh;
   padding: 20px 0;
-  position: relative;
-  margin-top: -55px;
+  position: absolute;
 }
 
 .sidebar {

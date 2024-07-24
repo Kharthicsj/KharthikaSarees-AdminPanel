@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
 import AdminPanel from './components/Adminpanel';
 import Kottacotton from "./components/Kottacotton";
 import Pochampalli from "./components/Pochampalli";
 import Silkcotton from "./components/Silkcotton";
 import Softsilk from "./components/Softsilk";
 import Sideheader from "./components/Sideheader";
+import Login from './components/Login';
+import ProtectedRoute from './components/Protectedroute';
 import Users from './components/Users';
 import Data from './components/Data';
 import Inventory from './components/Inventory';
@@ -16,19 +17,54 @@ function App() {
   return (
     <Router>
       <div>
-        <Header />
         <Sideheader />
         <Routes>
-          <Route path="/" element={<AdminPanel />} />
-          <Route path="/kotta" element={<Kottacotton />} />
-          <Route path="/pochampalli" element={<Pochampalli />} />
-          <Route path="/silkcotton" element={<Silkcotton />} />
-          <Route path="/softsilk" element={<Softsilk />} />
-          <Route path='/users' element={<Users />} />
-          <Route path='/data' element={<Data />} />
-          <Route path='/inventory' element={<Inventory />} />
-          <Route path='/orders' element={<Orders/>}/>
-          {/* Add more routes here */}
+          <Route path="/" element={<Login />} />
+          <Route path="/cotton" element={
+            <ProtectedRoute>
+              <AdminPanel />
+            </ProtectedRoute>
+          } />
+          <Route path="/kotta" element={
+            <ProtectedRoute>
+              <Kottacotton />
+            </ProtectedRoute>
+          } />
+          <Route path="/pochampalli" element={
+            <ProtectedRoute>
+              <Pochampalli />
+            </ProtectedRoute>
+          } />
+          <Route path="/silkcotton" element={
+            <ProtectedRoute>
+              <Silkcotton />
+            </ProtectedRoute>
+          } />
+          <Route path="/softsilk" element={
+            <ProtectedRoute>
+              <Softsilk />
+            </ProtectedRoute>
+          } />
+          <Route path="/users" element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          } />
+          <Route path="/data" element={
+            <ProtectedRoute>
+              <Data />
+            </ProtectedRoute>
+          } />
+          <Route path="/inventory" element={
+            <ProtectedRoute>
+              <Inventory />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders" element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          } />
         </Routes>
       </div>
     </Router>

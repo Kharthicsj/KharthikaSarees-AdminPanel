@@ -15,7 +15,7 @@ const Sideheader = () => {
     <div className="sidebar-container">
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
         <div className="menu-item-container">
-          <div className="menu-item" onClick={() => navigate('/')}>
+          <div className="menu-item" onClick={() => navigate('/cotton')}>
             <span className="material-symbols-outlined">add</span>
             <span className="menu-label">Add</span>
           </div>

@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../Styles/Panel.css";
+import Header from "./Header";
 import SubHeader from "./SubHeader"; // Import SubHeader if it's used in the component
 
 // Configure AWS SDK
@@ -20,7 +21,7 @@ const productDetailsFileName = "ProductDetails.json";
 
 const Kottacotton = () => {
   const [files, setFiles] = useState([]);
-  const[loadingText,setLoadingText] = useState("");
+  const [loadingText, setLoadingText] = useState("");
   const [folderNameInput, setFolderNameInput] = useState("");
   const [productData, setProductData] = useState({
     id: "",
@@ -71,8 +72,8 @@ const Kottacotton = () => {
     setEditData({
       ...editData,
       description: e,
-    })
-  }
+    });
+  };
 
   const handleFolderNameChange = (e) => {
     setFolderNameInput(e.target.value);
@@ -172,7 +173,6 @@ const Kottacotton = () => {
     setLoading(true);
     setLoadingText("Editing");
 
-
     const s3 = new AWS.S3();
 
     try {
@@ -216,38 +216,40 @@ const Kottacotton = () => {
 
   const handleDeleteSubmit = async (e) => {
     e.preventDefault();
-  
+
     setLoading(true);
     setLoadingText("Deleting");
-  
+
     const s3 = new AWS.S3();
     const folderToDelete = `KottaCotton/${deleteId}/`; // Ensure the correct path within KottaCotton
-  
+
     try {
       // Fetch and update JSON data
       const productDetailsResponse = await axios.get(
         `https://${bucketName}.s3.eu-north-1.amazonaws.com/${folderName}/${productDetailsFileName}`
       );
       const productDetails = productDetailsResponse.data;
-  
+
       // Filter out the product to be deleted
       const updatedProductDetails = productDetails.filter(
         (product) => product.id !== deleteId
       );
-  
+
       // Update JSON file in AWS S3 bucket
-      await s3.putObject({
-        Bucket: bucketName,
-        Key: `${folderName}/${productDetailsFileName}`,
-        Body: JSON.stringify(updatedProductDetails),
-        ContentType: "application/json",
-      }).promise();
-  
+      await s3
+        .putObject({
+          Bucket: bucketName,
+          Key: `${folderName}/${productDetailsFileName}`,
+          Body: JSON.stringify(updatedProductDetails),
+          ContentType: "application/json",
+        })
+        .promise();
+
       console.log("Product details updated successfully");
-  
+
       // Delete the corresponding product folder
       await deleteFolder(folderToDelete);
-  
+
       setDeleteId("");
       alert("Product and folder deleted successfully");
     } catch (error) {
@@ -259,12 +261,12 @@ const Kottacotton = () => {
       setLoading(false);
     }
   };
-  
+
   // Helper function to delete an entire folder
   const deleteFolder = async (folderPrefix) => {
     const s3 = new AWS.S3();
     let continuationToken = null;
-  
+
     try {
       do {
         // List objects in the folder
@@ -273,14 +275,14 @@ const Kottacotton = () => {
           Prefix: folderPrefix,
           ContinuationToken: continuationToken,
         };
-  
+
         const listedObjects = await s3.listObjectsV2(listParams).promise();
-  
+
         if (listedObjects.Contents.length === 0) {
           console.log(`No objects found in folder ${folderPrefix}.`);
           break;
         }
-  
+
         // Prepare delete parameters
         const deleteParams = {
           Bucket: bucketName,
@@ -288,197 +290,202 @@ const Kottacotton = () => {
             Objects: listedObjects.Contents.map(({ Key }) => ({ Key })),
           },
         };
-  
+
         // Delete objects in the folder
         await s3.deleteObjects(deleteParams).promise();
         console.log(
-          `Deleted objects: ${listedObjects.Contents.map(({ Key }) => Key).join(", ")}`
+          `Deleted objects: ${listedObjects.Contents.map(({ Key }) => Key).join(
+            ", "
+          )}`
         );
-  
+
         // Check if there are more objects to delete
         continuationToken = listedObjects.IsTruncated
           ? listedObjects.NextContinuationToken
           : null;
       } while (continuationToken);
-  
+
       console.log(`Successfully deleted folder ${folderPrefix}`);
     } catch (error) {
       console.error(`Error deleting folder ${folderPrefix}:`, error);
     }
   };
-      
+
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
   return (
-    <div className="form-container">
-      <SubHeader activeTab={activeTab} />
-      <div className="tab-navigation">
-        <button
-          className={`tab-button ${activeTab === "upload" ? "active" : ""}`}
-          onClick={() => handleTabChange("upload")}
-        >
-          Upload
-        </button>
-        <button
-          className={`tab-button ${activeTab === "edit" ? "active" : ""}`}
-          onClick={() => handleTabChange("edit")}
-        >
-          Edit
-        </button>
-        <button
-          className={`tab-button ${activeTab === "delete" ? "active" : ""}`}
-          onClick={() => handleTabChange("delete")}
-        >
-          Delete
-        </button>
+    <div>
+      <Header />
+      <div className="form-container">
+        <SubHeader activeTab={activeTab} />
+        <div className="tab-navigation">
+          <button
+            className={`tab-button ${activeTab === "upload" ? "active" : ""}`}
+            onClick={() => handleTabChange("upload")}
+          >
+            Upload
+          </button>
+          <button
+            className={`tab-button ${activeTab === "edit" ? "active" : ""}`}
+            onClick={() => handleTabChange("edit")}
+          >
+            Edit
+          </button>
+          <button
+            className={`tab-button ${activeTab === "delete" ? "active" : ""}`}
+            onClick={() => handleTabChange("delete")}
+          >
+            Delete
+          </button>
+        </div>
+        {loading ? (
+          <Loading text={loadingText} />
+        ) : (
+          <>
+            {activeTab === "upload" && (
+              <>
+                <h2>Kotta Cotton Admin Panel</h2>
+                <form onSubmit={handleSubmit}>
+                  <div>
+                    <label htmlFor="folderName">Folder Name:</label>
+                    <input
+                      type="text"
+                      id="folderName"
+                      placeholder="2xxxxx"
+                      value={folderNameInput}
+                      onChange={handleFolderNameChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="files">Upload Images:</label>
+                    <input
+                      type="file"
+                      id="files"
+                      multiple
+                      onChange={handleFileChange}
+                      accept="image/*"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="id">ID:</label>
+                    <input
+                      type="text"
+                      id="id"
+                      name="id"
+                      value={productData.id}
+                      onChange={handleInputChange}
+                      placeholder="2xxxxx"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="name">Name:</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={productData.name}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="price">Price:</label>
+                    <input
+                      type="text"
+                      id="price"
+                      name="price"
+                      value={productData.price}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="description">Description:</label>
+                    <ReactQuill
+                      value={productData.description}
+                      onChange={handleDescriptionChange}
+                    />
+                  </div>
+                  <button type="submit">Upload</button>
+                </form>
+              </>
+            )}
+            {activeTab === "edit" && (
+              <>
+                <h2>Edit Product Details</h2>
+                <form onSubmit={handleEditSubmit}>
+                  <div>
+                    <label htmlFor="editId">Product ID:</label>
+                    <input
+                      type="text"
+                      id="editId"
+                      name="id"
+                      value={editData.id}
+                      onChange={handleEditInputChange}
+                      placeholder="2xxxxx"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="editName">Name:</label>
+                    <input
+                      type="text"
+                      id="editName"
+                      name="name"
+                      value={editData.name}
+                      onChange={handleEditInputChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="editPrice">Price:</label>
+                    <input
+                      type="text"
+                      id="editPrice"
+                      name="price"
+                      value={editData.price}
+                      onChange={handleEditInputChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="editDescription">Description:</label>
+                    <ReactQuill
+                      value={editData.description}
+                      onChange={handleEditDescriptionInputchange}
+                      required
+                    />
+                  </div>
+                  <button type="submit">Edit Product</button>
+                </form>
+              </>
+            )}
+            {activeTab === "delete" && (
+              <>
+                <h2>Delete Product</h2>
+                <form onSubmit={handleDeleteSubmit}>
+                  <div>
+                    <label htmlFor="deleteId">Product ID to delete:</label>
+                    <input
+                      type="text"
+                      id="deleteId"
+                      value={deleteId}
+                      onChange={handleDeleteInputChange}
+                      placeholder="2xxxx"
+                      required
+                    />
+                  </div>
+                  <button type="submit">Delete Product</button>
+                </form>
+              </>
+            )}
+          </>
+        )}
       </div>
-      {loading ? (
-        <Loading text={loadingText}/>
-      ) : (
-        <>
-          {activeTab === "upload" && (
-            <>
-              <h2>Kotta Cotton Admin Panel</h2>
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="folderName">Folder Name:</label>
-                  <input
-                    type="text"
-                    id="folderName"
-                    placeholder="2xxxxx"
-                    value={folderNameInput}
-                    onChange={handleFolderNameChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="files">Upload Images:</label>
-                  <input
-                    type="file"
-                    id="files"
-                    multiple
-                    onChange={handleFileChange}
-                    accept="image/*"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="id">ID:</label>
-                  <input
-                    type="text"
-                    id="id"
-                    name="id"
-                    value={productData.id}
-                    onChange={handleInputChange}
-                    placeholder="2xxxxx"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="name">Name:</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={productData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="price">Price:</label>
-                  <input
-                    type="text"
-                    id="price"
-                    name="price"
-                    value={productData.price}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="description">Description:</label>
-                  <ReactQuill
-                    value={productData.description}
-                    onChange={handleDescriptionChange}
-                  />
-                </div>
-                <button type="submit">Upload</button>
-              </form>
-            </>
-          )}
-          {activeTab === "edit" && (
-            <>
-              <h2>Edit Product Details</h2>
-              <form onSubmit={handleEditSubmit}>
-                <div>
-                  <label htmlFor="editId">Product ID:</label>
-                  <input
-                    type="text"
-                    id="editId"
-                    name="id"
-                    value={editData.id}
-                    onChange={handleEditInputChange}
-                    placeholder="2xxxxx"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="editName">Name:</label>
-                  <input
-                    type="text"
-                    id="editName"
-                    name="name"
-                    value={editData.name}
-                    onChange={handleEditInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="editPrice">Price:</label>
-                  <input
-                    type="text"
-                    id="editPrice"
-                    name="price"
-                    value={editData.price}
-                    onChange={handleEditInputChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="editDescription">Description:</label>
-                  <ReactQuill
-                    value={editData.description}
-                    onChange={handleEditDescriptionInputchange}
-                    required
-                  />
-                </div>
-                <button type="submit">Edit Product</button>
-              </form>
-            </>
-          )}
-          {activeTab === "delete" && (
-            <>
-              <h2>Delete Product</h2>
-              <form onSubmit={handleDeleteSubmit}>
-                <div>
-                  <label htmlFor="deleteId">Product ID to delete:</label>
-                  <input
-                    type="text"
-                    id="deleteId"
-                    value={deleteId}
-                    onChange={handleDeleteInputChange}
-                    placeholder="2xxxx"
-                    required
-                  />
-                </div>
-                <button type="submit">Delete Product</button>
-              </form>
-            </>
-          )}
-        </>
-      )}
     </div>
   );
 };
