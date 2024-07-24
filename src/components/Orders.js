@@ -14,7 +14,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/order-table");
+        const response = await axios.get("https://kharthikasarees-backend.onrender.com/api/order-table");
         if (response.status === 200) {
           setOrders(response.data);
           setTotalOrders(response.data.length);
