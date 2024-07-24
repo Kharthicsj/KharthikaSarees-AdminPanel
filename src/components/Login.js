@@ -14,7 +14,7 @@ const Login = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:4000/admin-login', { email, password });
+      const response = await axios.post('https://kharthikasarees-backend.onrender.com/admin-login', { email, password });
       console.log('Response from server:', response.data);
       if (response.data.email) { // Check if the response contains the email field
         localStorage.setItem('isLoggedIn', 'true');

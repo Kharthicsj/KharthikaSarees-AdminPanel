@@ -71,7 +71,7 @@ const Orders = () => {
 
   const handleStatusChange = async (transactionId, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:4000/api/order-status`, { transaction_id: transactionId, status: newStatus });
+      const response = await axios.put(`https://kharthikasarees-backend.onrender.com/api/order-status`, { transaction_id: transactionId, status: newStatus });
       if (response.status === 200) {
         setOrders(orders.map(order => order.transaction_id === transactionId ? { ...order, status: newStatus } : order));
         setFilteredOrders(filteredOrders.map(order => order.transaction_id === transactionId ? { ...order, status: newStatus } : order));

@@ -14,7 +14,7 @@ const UsersTable = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/full-users");
+        const response = await axios.get("https://kharthikasarees-backend.onrender.com/api/full-users");
         if (response.status === 200) {
           setUsers(response.data);
           setTotalUsers(response.data.length);
